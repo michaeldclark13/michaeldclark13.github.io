@@ -40,7 +40,7 @@
         <style>
             div.relative {
                 position: relative;
-                left: 625px;
+                left: 750px;
                 bottom: 600px;
                 width: 500px;
             }
@@ -59,10 +59,9 @@
                 The supported colors are red, green, and blue. The drawing area can also be redrawn and cleared. After 
                 the shape is drawn, the shape can be rotated clockwise by keeping the mouse held down and dragging to the left. 
                 The shape can be rotated counterclockwise by dragging the mouse to the right. Additionally, once the shape is 
-                drawn and the mouse is released, the shape can be scaled up or down. Finally, 
+                drawn and the mouse is released, the shape can be scaled up or down by pressing Shift+S or s respectively. Finally, 
                 once a shape or multiple shapes have been drawn, the global environment can be rotated.
             </p>
-
             <p>Set Color</p>
             <button  onclick="setColorMode('r')"> Red</button>
             <button  onclick="setColorMode('g')"> Green</button>
@@ -81,6 +80,9 @@
                 <input onclick="toggleGlobalRotation()" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" before>
                 <label class="onoffswitch-label" for="myonoffswitch"></label>
             </div> 
+            <p>Clear and Refresh Screen</p>
+            <button  onclick="clear_screen()"> Clear Screen</button>
+            <button  onclick="redisplay_screen()"> Redisplay Screen</button>
         </div>
     </body>
 </html>
