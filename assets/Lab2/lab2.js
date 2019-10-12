@@ -549,9 +549,53 @@ function setColorMode(color)
   color_mode=color;
 }
 
+function scaleShape(isIncrease)
+{
+  if(isIncrease)
+  {
+    if(polygon_mode == 'p')
+    {
+      points_scale[point_counter-1]*=1.1; 			  	  
+    } 
+    else if (polygon_mode == 'h' || polygon_mode == 'v')
+    {
+      lines_scale[line_counter-1]*=1.1;
+    }
+    else if (polygon_mode == 't')
+    {
+      triangles_scale[triangle_counter-1]*=1.1;
+    }
+    else if (polygon_mode == 'q')
+    {
+      squares_scale[square_counter-1]*=1.1;
+    }
+  }
+  else
+  {
+    if(polygon_mode == 'p')
+    {
+      points_scale[point_counter-1]*=0.9; 			  	  
+    } 
+    else if (polygon_mode == 'h' || polygon_mode == 'v')
+    {
+      lines_scale[line_counter-1]*=0.9;
+    }
+    else if (polygon_mode == 't')
+    {
+      triangles_scale[triangle_counter-1]*=0.9;
+    }
+    else if (polygon_mode == 'q')
+    {
+      squares_scale[square_counter-1]*=0.9;
+    }
+  }
+  drawScene();
+}
+
 function toggleGlobalRotation()
 {
   global_rotation_on=!global_rotation_on;
+  Z_angle=0.0;
 }
 
 function clear_screen()
