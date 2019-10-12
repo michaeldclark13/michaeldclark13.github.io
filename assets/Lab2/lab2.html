@@ -37,12 +37,50 @@
         <script type="text/javascript" src="lab2_shaders_setup.js"></script>
         <script type="text/javascript" src="lab2.js"></script>
 
+        <style>
+            div.relative {
+                position: relative;
+                left: 625px;
+                bottom: 600px;
+                width: 500px;
+            }
+        </style>
+
     </head>
 
     <body onload="webGLStart();">
 
-        <canvas id="lab2-canvas"style="border:none;"width="1000"height="1000"></canvas>
+        <canvas id="lab2-canvas"style="border:none;"width="600"height="600"></canvas>
+        <div class = "relative">
+            <h3>Description</h3>
+            <p>
+                This program supports the drawing of simple 2D shapes via mouse clicks on the canvas within a browser 
+                window. The supported shapes are a point, horizontal line, vertical line, triangle, and a square. 
+                The supported colors are red, green, and blue. The drawing area can also be redrawn and cleared. After 
+                the shape is drawn, the shape can be rotated clockwise by keeping the mouse held down and dragging to the left. 
+                The shape can be rotated counterclockwise by dragging the mouse to the right. Additionally, once the shape is 
+                drawn and the mouse is released, the shape can be scaled up or down. Finally, 
+                once a shape or multiple shapes have been drawn, the global environment can be rotated.
+            </p>
 
+            <p>Set Color</p>
+            <button  onclick="setColorMode('r')"> Red</button>
+            <button  onclick="setColorMode('g')"> Green</button>
+            <button  onclick="setColorMode('b')"> Blue</button>
+            <br>
+            <p>Set Shape Type</p>
+            <button  onclick="setPolygonMode('p')"> Point</button>
+            <button  onclick="setPolygonMode('h')"> Horizontal Line</button>
+            <button  onclick="setPolygonMode('v')"> Vertical Line</button>
+            <button  onclick="setPolygonMode('t')"> Triangle</button>
+            <button  onclick="setPolygonMode('q')"> Square</button>
+            <br>
+            <p>Toggle Global Rotation</p>
+            <link rel="stylesheet" type="text/css" href="onoffswitch.css">
+            <div class="onoffswitch">
+                <input onclick="toggleGlobalRotation()" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" before>
+                <label class="onoffswitch-label" for="myonoffswitch"></label>
+            </div> 
+        </div>
     </body>
-
 </html>

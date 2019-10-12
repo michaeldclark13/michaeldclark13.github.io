@@ -473,9 +473,6 @@ function onKeyDown(event) {
     case 81:
         polygon_mode = 'q';
     break;
-    case 79:
-        polygon_mode = 'o';
-    break;
     case 82:
         color_mode = 'r';
     break;
@@ -540,6 +537,21 @@ function onKeyDown(event) {
   console.log('color mode =', color_mode);
   
   drawScene();
+}
+
+function setPolygonMode(polygon)
+{
+  polygon_mode=polygon;
+}
+
+function setColorMode(color)
+{
+  color_mode=color;
+}
+
+function toggleGlobalRotation()
+{
+  global_rotation_on=!global_rotation_on;
 }
 
 function clear_screen()
