@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Michael Clark &mdash; Solar System </title>
+        <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+        <script type="text/javascript" src="glMatrix-0.9.5.min.js"></script>
+
+        <!--  ************** Fragment Shader ************* -->
+        <script id="shader-fs" type="x-shader/x-fragment">
+            precision mediump float;
+
+            uniform mat4 uMMatrix; 
+            uniform mat4 uVMatrix;
+            uniform mat4 uPMatrix;
+         
+            varying vec4 vColor; 
+         
+            void main(void) {
+                gl_FragColor =vColor;
+            }
+        </script>
+
+        <!--  ************** Vertex Shader ************* -->
+        <script id="shader-vs" type="x-shader/x-vertex">
+            precision mediump float;
+            attribute vec3 aVertexPosition;
+            attribute vec4 aVertexColor;
+
+            uniform mat4 ModelMatrix; 
+            uniform mat4 ViewMatrix;
+            uniform mat4 ProjectionMatrix;
+
+            varying vec4 vColor; 
+
+
+            void main(void) {
+                gl_Position = ProjectionMatrix*ViewMatrix*ModelMatrix*vec4(aVertexPosition, 1.0);
+                vColor = aVertexColor;
+            }
+        </script>
+
+        <script type="text/javascript" src="SolarSystem_shaders_setup.js"></script>
+        <script type="text/javascript" src="SolarSystem.js"></script>
+
+    </head>
+
+    <body onload="webGLStart();">
+
+        <canvas id="SolarSystem-canvas"style="border:none;"width="800" height="800"></canvas>  
+
+    </body>
+</html>
