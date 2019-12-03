@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Michael Clark &mdash; Lab 5 </title>
+        <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+                
+                <!--  ************** Lighting Fragment Shader ************* -->
+                <script id="shader-fs" type="x-shader/x-fragment">
+                    precision mediump float;
+                    precision mediump int; 
+
+                    varying vec4 vPosition;
+                    varying vec3 vTransformedNormal;
+                    varying highp vec2 vTextureCoord;
+
+                    uniform int display_mode; 
+
+                    uniform mat4 ViewToWorldMatrix;
+
+                            uniform vec4 Ka;
+                            uniform vec4 Kd;
+                            uniform vec4 Ks;
+                            uniform float mat_shininess; 
+                        
+                            uniform vec4 light_pos; 
+                            uniform vec4 Ia; 
+                            uniform vec4 Id; 
+                            uniform vec4 Is;
+
+                    uniform sampler2D myTexture;
+
+
+                    uniform samplerCube cubeMap;
+
+                 
+                    void main(void) 
+                    {
+                            vec4 texcolor; 
+                        
+                            //LIGHTING ONLY MODE
+                            vec4 Ambient_Term = Ka * Ia;
+
+                            if(display_mode == 0)
+                            {
+                                gl_FragColor = Ambient_Term;
+                            }
+                            else
+                            {
+                                vec3 L = normalize(vec3(light_pos - vPosition));
+                                vec3 N = normalize(vTransformedNormal);
+                                float lambertian = max(dot(N,L), 0.0);
+                
+                                vec4 Diffuse_Term = Kd * Id * lambertian;
+                
+                                vec4 Specular_Term = vec4(0.0, 0.0, 0.0, 1.0);
+                
+                                if(lambertian > 0.0)
+                                {
+                                    vec3 R = normalize(-reflect(L, N));
+                                    vec3 V = normalize(-vec3(vPosition));
+                
+                                    float specAngle = max(dot(R,V),0.0);
+                                    Specular_Term = Ks * Is * pow(specAngle, mat_shininess);
+                                }
+    
+
+                                if(display_mode == 1)
+                                {
+                                    //LIGHTING ONLY MODE
+                                    gl_FragColor = Ambient_Term + Diffuse_Term + Specular_Term;
+                                }
+                                else if (display_mode == 2)
+                                {
+                                    //LIGHTING AND TEXTURE MODE
+                                    texcolor = texture2D(myTexture, vTextureCoord); 
+                                    gl_FragColor = texcolor;  
+                                }
+                                else if (display_mode == 3)
+                                {
+                                    vec3 normal = normalize(vTransformedNormal);
+                                    vec3 eyeDirection = normalize(-vPosition.xyz);
+                                    vec3 lookup = reflect(eyeDirection, normal);
+                                    gl_FragColor = textureCube(cubeMap, -lookup);
+
+                                    // vec3 view_vector, ref;
+                                    //    vec4 env_color = vec4(1,0,0,1);
+                                     //   view_vector = normalize(vec3(vec4(0,0,0,1)-vPosition));
+                                      //  ref = normalize(reflect(-view_vector, vTransformedNormal)); // in eye space 
+                                      //  ref = vec3(ViewToWorldMatrix*vec4(ref,0)); // convert to world space 
+                                      //  env_color = textureCube(cubeMap, ref);
+                                     //   gl_FragColor = env_color; -->
+                                }
+                            }
+                    }
+                </script>
+        
+                <!--  ************** Lighting Vertex Shader ************* -->
+                <script id="shader-vs" type="x-shader/x-vertex">
+                    precision mediump float;
+                    precision mediump int; 
+
+                    uniform int display_mode; 
+        
+                    attribute vec3 aVertexPosition;
+                    attribute vec3 aVertexNormal;
+                    attribute vec2 aTextureCoord; 
+        
+                    uniform mat4 ModelMatrix; 
+                    uniform mat4 ViewMatrix;
+                    uniform mat4 ProjectionMatrix;
+                    uniform mat4 NormalMatrix; 
+                    uniform mat4 ViewToWorldMatrix; //Used for environment mapping exclusively
+        
+                    uniform vec4 Ka;
+                    uniform vec4 Kd;
+                    uniform vec4 Ks;
+                    uniform float mat_shininess; 
+                 
+                    uniform vec4 light_pos; 
+                    uniform vec4 Ia; 
+                    uniform vec4 Id; 
+                    uniform vec4 Is;
+
+                    uniform sampler2D myTexture; 
+        
+                    varying vec4 vPosition;  
+                    varying vec3 vTransformedNormal;  
+                    varying highp vec2 vTextureCoord; 
+
+        
+                    void main(void) {   
+                        vPosition = ViewMatrix * ModelMatrix * vec4(aVertexPosition, 1.0);
+                        gl_Position = ProjectionMatrix * vPosition;
+                        vTextureCoord = aTextureCoord;
+                        vTransformedNormal = vec3(NormalMatrix*vec4(aVertexNormal,0.0));
+                    }
+                </script>       
+
+
+        <script type="text/javascript" src="Setup/glMatrix-0.9.5.min.js"></script>
+        <script type="text/javascript" src="Setup/lab5_shaders_setup.js"></script>
+        <script type="text/javascript" src="lab5.js"></script>
+        <script type="text/javascript" src="Shapes/planes.js"></script>
+        <script type="text/javascript" src="Shapes/sphere.js"></script>
+        <script type="text/javascript" src="Shapes/klienBottle.js"></script>
+        <script type="text/javascript" src="Shapes/torus.js"></script>
+        <script type="text/javascript" src="textures.js"></script>
+        <script type="text/javascript" src="Setup/colors.js"></script>
+
+
+
+
+    </head>
+
+    <body onload="webGLStart();">
+
+        <canvas id="lab5-canvas"style="border:none;"width="800" height="800"></canvas>  
+        
+        <h4> Display Mode:  </h4>
+        <button onclick="setDisplayMode(0)"> Wireframes </button>
+        <button onclick="setDisplayMode(1)"> Colors </button>
+        <button onclick="setDisplayMode(2)"> Textures </button>
+        <button onclick="setDisplayMode(3)"> Environment Mapping </button>
+
+
+
+    </body>
+</html>
