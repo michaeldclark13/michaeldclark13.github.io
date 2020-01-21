@@ -19,8 +19,6 @@ var pMatrix = mat4.create();   // projection matrix
 var v2wMatrix = mat4.create();
 var X_angle = 0.0;
 var Y_angle = 0.0;
-var distFromSun = 0.0;
-var planetSpeed = 0.0;
 
 
 var cameraPosition = [0,0,30];
@@ -141,6 +139,9 @@ function degToRad(degrees) {
 var sunMatrix = mat4.create();
 mat4.identity(sunMatrix);
 
+var lightMatrix = mat4.create();
+mat4.identity(lightMatrix);
+
 var planetMatrix = mat4.create();
 mat4.identity(planetMatrix);
 
@@ -197,9 +198,18 @@ function drawScene(deltaTime) {
 
     model = PopMatrix(Mstack);
     PushMatrix(Mstack, model);
+    mat4.identity(lightMatrix);
+    lightMatrix = mat4.translate(lightMatrix, light_pos);  	
+    model = mat4.multiply(model, lightMatrix);
+    setNormalMatrix(model, vMatrix);
+    drawSphere(model, nMatrix, planet_ambient, planet_diffuse, planet_specular, planet_shine, iceTexture);
+
+
+    model = PopMatrix(Mstack);
+    PushMatrix(Mstack, model);
     mat4.identity(planetMatrix);
-    planetMatrix = mat4.rotate(planetMatrix, degToRad(-planetSpeed*time), [0,1,0]);
-    planetMatrix = mat4.translate(planetMatrix, [7 + distFromSun, 0, 0]);  	
+    //planetMatrix = mat4.rotate(planetMatrix, degToRad(-4*time), [0,1,0]);
+    planetMatrix = mat4.translate(planetMatrix, [7, 0, 0]);  	
     planetMatrix = mat4.scale(planetMatrix, [0.8, 0.8, 0.8]);
     model = mat4.multiply(model, planetMatrix);
     setNormalMatrix(model, vMatrix);
@@ -209,7 +219,7 @@ function drawScene(deltaTime) {
     model = PopMatrix(Mstack);
     PushMatrix(Mstack, model);
     mat4.identity(ringMatrix);
-    ringMatrix = mat4.rotate(ringMatrix, degToRad(7*time), [0,1,1]);
+    //ringMatrix = mat4.rotate(ringMatrix, degToRad(7*time), [0,1,1]);
     ringMatrix = mat4.scale(ringMatrix, [3, 2, 0.8]);
     model = mat4.multiply(model, ringMatrix);
     setNormalMatrix(model, vMatrix);
@@ -218,7 +228,7 @@ function drawScene(deltaTime) {
     model = PopMatrix(Mstack);
     PushMatrix(Mstack, model);
     mat4.identity(ringMatrix);
-    ringMatrix = mat4.rotate(ringMatrix, degToRad(7*time), [1,1,0]);
+    //ringMatrix = mat4.rotate(ringMatrix, degToRad(7*time), [1,1,0]);
     ringMatrix = mat4.scale(ringMatrix, [3, 3, 3]);
     model = mat4.multiply(model, ringMatrix);
     setNormalMatrix(model, vMatrix);
@@ -305,23 +315,26 @@ function onDocumentMouseOut( event ) {
   document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
 }
 
-function onKeyDown( event) 
+function onKeyDown(event) 
 {
-
   switch(event.keyCode)  {
     case 39: //Right 
-        distFromSun = distFromSun + 0.1;
-
-    break;
+      light_pos[0]++;
+      break;
     case 37: //Left 
-        distFromSun = distFromSun - 0.1;
-    break;
+      light_pos[0]--;
+      break;
     case 38: //Up 
-      planetSpeed = planetSpeed + 1;
-    break;
+      light_pos[1]++;
+      break;
     case 40: //Down 
-      planetSpeed = planetSpeed - 1;
-    break;
-
+      light_pos[1]--;
+      break;
+    case 70: //F 
+      light_pos[2]++;
+      break;
+    case 66: //B
+      light_pos[2]--;
+      break;
   }
 }

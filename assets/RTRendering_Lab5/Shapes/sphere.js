@@ -71,8 +71,6 @@ function InitializeSphere(radius, numSlices, numStacks)
       sphereVertices.push(radius * Ny);
       sphereVertices.push(radius * Nz);
 
-      
-
       sphereNormals.push(Nx);
       sphereNormals.push(Ny);
       sphereNormals.push(Nz);

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Michael Clark &mdash; Data Visualization Homework 1 </title>
+    </head>
+
+    <body>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script type = "text/javascript" src = "importRawData.js"></script>
+        <script type = "text/javascript" src = "graph.js"></script>
+
+
+        <h1>CSE 5544: Traumatic Brain Injury Visualizations</h1>
+        <h5>Michael Clark (clark.2816)</h5>
+
+        <h3>Report</h3>
+        <ul>
+            <li>Description: The following visualizations display interesting information 
+                on Traumatic Brain Injury Patients. The first visualization shows the differences
+                between the number of males and females encountered over the roughly 5000 day study. 
+                The second visualization highlights some symptoms patients were reported exhibiting
+                over time based on their age group.
+            </li>
+            <li>Decisions: I chose the health dataset since I wanted to gain experience importing 
+                and modifing excel (and csv) data. The tools (D3 and Tableau Public) were chosen based
+                on an in-class demo (D3) and reported ease of use (Tableau) 
+            </li>
+            <li>Steps: </li>
+                <ul>
+                    <li>
+                        D3: I converted the excel file into CSV data. I then imported the data and modified
+                        it using javascript to obtain the data I wanted. From here I used the D3 API and some
+                        Javascript logic to create two bar graphs which can be toggled by the button below the 
+                        graph.
+                    </li>
+                    <li>
+                        Tableau Public: I imported the excel file into the Tableau desktop application. I then used 
+                        the interface to generate the line graphs. From here I published the visualization and embeded
+                        the visualization in this html page.
+                    </li>
+                </ul>
+            <li>
+                Source Code can be seen at https://github.com/michaeldclark13/CSE5544_Homework
+            </li>
+            <li<>
+                Image Preference: I prefer the Tableau visualization because of its color coding and legend. 
+                I feel like it is easier to read as well.
+            </li>
+            <li>
+                Pros and Cons: See below descriptions
+            </li>
+            <li>
+                Extra: For the D3 visualization, a button at the bottom is used to toggle male and female data.
+            </li>
+          </ul>  
+
+        <!-- D3 Visualizations-->
+        <h3>D3 Visualization </h3>
+        <p>
+           For my first visualization, I used the data-driven document tool 
+           (D3) to display the the number of male and female patients that were
+           were studied over the roughly 5000 day study. The X-axis for each graph
+           represents the number of days before or after the 1st TBI. 
+        </p>
+
+        <p>
+            D3 is an incredibly verstile tool since it harnesses the power of Javascript
+            code from which an almost limitless amount of visualizations can be generated. 
+            D3 can draw lines, points, rectangles (bar graphs), and circles using svg, and 
+            there are many APIs available to render more advanced visualization techniques.
+            All data types also are supported. The one major downside to D3 is the amount of
+            time and knowledge that must first be invested before any meaningful visualizations
+            can be rendered. A strong knowledge of Javascript is also necessary to refine the data
+            prior to visualization. The convention of stringing together many .function() statements
+            is also a confusing and frankly poorly designed framework for readable code.
+        </p>
+        <p>
+            I would only use D3 as a visualization tool if my data required an high level of customization
+            and control. Using D3, arrays of data can be parsed via Javascript and then used to draw a variety
+            of shapes and diagrams, all without having to modify a CSV file beforehand. 
+        </p>
+
+        <p>
+            NOTE: If the visualization does not render, please REFRESH the page as an error in the order of 
+            CSV documents loaded has likely occured.
+        </p>
+        <p>
+            2nd NOTE: The gender which is currently displayed can be changed by pressing the button below 
+            the visualization.
+        </p>
+        <svg id = "MaleFrequency" height="525" width="1000"></svg>
+        <button onclick="switchGenders()">Change Gender Displayed</button>
+
+        <!-- Tableau Visualization-->
+        <h3>Tableau Visualization </h3>
+        <p>
+           For my second visualization, I used the Tableau Public tool 
+           to display the occurrance of a variety of symptoms (PTSD, 
+           Sleep Difficulties, Alzheimers, Depression, Endocrine Issues, and Stress)
+           over the 9 year study across the different age groups. Overall, a high number
+           of depression cases were reported for ages 18-34 and a high number of sleep
+           and PTSD disorders were reported for ages 25-34.
+        </p>
+
+        <p>
+            Tableau public is quite an easy tool to use because of its powerful and yet simple
+            user interface. The tool allows for quick import of excel data from which data 
+            can be modified and finally accepted. These columns are broken into different 
+            dimensions that can be used in a variety of ways to create bar graphs, scatterplots,
+            line graphs, and more advanced visualizations. Because of its ease of use, a high number
+            of visualizations can be rendered from one or more data sets at a time. Once the user
+            is happy with the data sets, he or she can publish her visualizations online and then embed
+            the interactive visualization into an html page (as seen below). Most of the common data types
+            are supported by tableau, while volume rendering is not a supported feature of the interface.
+        </p>
+        <p>
+            I would use Tableau public in the future because of its ease of use and its powerfulful interface. 
+            The one downside of this tool in comparison to D3 would be its lack of programmability. Code offers
+            an almost endless number of possibilities in terms of manipulation and visualization of data. Regardless
+            of the features offered by the Tableau interface, if a data set required a high level of customability, a 
+            different visualization tool should be utilized.
+        </p>
+        <div class='tableauPlaceholder' id='viz1579554513622' style='position: relative'>
+            <noscript>
+                <a href='#'>
+                    <img alt=' ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ho&#47;Homework1Tableau&#47;Sheet1&#47;1_rss.png' style='border: none' />
+                </a>
+            </noscript>
+            
+            <object class='tableauViz'  style='display:none;'>
+                <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> 
+                <param name='embed_code_version' value='3' /> 
+                <param name='site_root' value='' />
+                <param name='name' value='Homework1Tableau&#47;Sheet1' />
+                <param name='tabs' value='no' />
+                <param name='toolbar' value='yes' />
+                <param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ho&#47;Homework1Tableau&#47;Sheet1&#47;1.png' /> 
+                <param name='animate_transition' value='yes' />
+                <param name='display_static_image' value='yes' />
+                <param name='display_spinner' value='yes' />
+                <param name='display_overlay' value='yes' />
+                <param name='display_count' value='yes' />
+            </object>
+        </div>                
+        
+        <script type='text/javascript'>                    
+            var divElement = document.getElementById('viz1579554513622');
+            var vizElement = divElement.getElementsByTagName('object')[0];                    
+            vizElement.style.width='100%';
+            vizElement.style.height=(divElement.offsetWidth*0.75)+'px';                    
+            var scriptElement = document.createElement('script');                    
+            scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    
+            vizElement.parentNode.insertBefore(scriptElement, vizElement);                
+        </script>
+
+    </body>
+</html>   

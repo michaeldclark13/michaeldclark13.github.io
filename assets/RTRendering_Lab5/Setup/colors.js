@@ -2,7 +2,7 @@
 var light_ambient = [0, 0, 0, 1]; 
 var light_diffuse = [0.8, 0.8, 0.8, 1];
 var light_specular = [1, 1, 1, 1]; 
-var light_pos = [15, 15, 15, 1];   // eye space position 
+var light_pos = [0, 0, 0, 1];   // eye space position 
 
 
 //SUN
